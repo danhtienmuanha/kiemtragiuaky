@@ -1,32 +1,32 @@
 <?php
 session_start();
-include 'config/connect.php'; // Kết nối đến cơ sở dữ liệu
+include 'config/connect.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy dữ liệu từ biểu mẫu
+    
     $username = $_POST['username'];
-    $password = $_POST['password']; // Bạn cần mã hóa mật khẩu ở đây
+    $password = $_POST['password']; 
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
 
-    // Kiểm tra xem tài khoản đã tồn tại chưa
+    
     $check_user_query = "SELECT * FROM User WHERE username='$username' OR email='$email' LIMIT 1";
     $result = $conn->query($check_user_query);
     $user = mysqli_fetch_assoc($result);
 
-    if ($user) { // Nếu tài khoản đã tồn tại
+    if ($user) { 
         echo "Tài khoản đã tồn tại";
     } else {
-        // Thêm người dùng mới vào cơ sở dữ liệu
+       
         $query = "INSERT INTO User (username, password, fullname, email, role) VALUES('$username', '$password', '$fullname', '$email', 'user')";
         mysqli_query($conn, $query);
         $_SESSION['username'] = $username;
         $_SESSION['role'] = 'user';
-        header('location: index.php'); // Chuyển hướng đến trang index.php
+        header('location: index.php'); 
     }
 }
 ?>
-<!-- Biểu mẫu HTML cho trang đăng ký -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

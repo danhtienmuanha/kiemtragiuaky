@@ -1,27 +1,27 @@
 <?php
 session_start();
-include 'config/connect.php'; // Kết nối đến cơ sở dữ liệu
+include 'config/connect.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy dữ liệu từ biểu mẫu
+    
     $username = $_POST['username'];
-    $password = $_POST['password']; // Bạn cần mã hóa mật khẩu ở đây
+    $password = $_POST['password']; 
 
-    // Kiểm tra xem tài khoản và mật khẩu có khớp không
+    
     $check_user_query = "SELECT * FROM User WHERE username='$username' AND password='$password' LIMIT 1";
     $result = $conn->query($check_user_query);
     $user = mysqli_fetch_assoc($result);
 
-    if ($user) { // Nếu thông tin đăng nhập đúng
+    if ($user) { 
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $user['role'];
-        header('location: index.php'); // Chuyển hướng đến trang index.php
+        header('location: index.php');
     } else {
         echo "Thông tin đăng nhập không chính xác";
     }
 }
 ?>
-<!-- Biểu mẫu HTML cho trang đăng nhập -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
